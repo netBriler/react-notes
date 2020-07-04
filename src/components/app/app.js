@@ -95,19 +95,34 @@ export default class App extends Component {
         });
     }
 
+    searchPost = (items, term) => {
+        if (term.length === 0) {
+            return items
+        }
+
+        return items.filter((item) => {
+            return item.text.indexOf(term) > -1
+        });
+    }
+
+    onUpdateSearch = term => this.setState({term})
+
     render() {
-        const {notes} = this.state;
+        const {notes, term} = this.state;
+
         const liked = notes.filter(item => item.like).length;
         const allNotes = notes.length;
+
+        const visiblePosts = this.searchPost(notes, term);
 
         return (
             <div className='app'>
                 <AppHeader allNotes={allNotes} liked={liked}/>
                 <div className="search-panel d-flex">
-                    <SearchPanel />
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <NoteStatusFilter />
                 </div>
-                <NoteList notes={this.state.notes} onDeleteItem={this.deleteNote} onToggleLiked={this.onToggleLiked} onToggleImportant={this.onToggleImportant} />
+                <NoteList notes={visiblePosts} onDeleteItem={this.deleteNote} onToggleLiked={this.onToggleLiked} onToggleImportant={this.onToggleImportant} />
                 <NoteAddForm onAddItem={this.addNode} />
             </div>
         )
