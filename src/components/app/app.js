@@ -5,33 +5,40 @@ import NoteStatusFilter from '../note-status-filter';
 import NoteList from '../note-list';
 import NoteAddForm from '../note-add-form';
 
+import axios from 'axios';
+
 import './app.css';
 
 export default class App extends Component {
 
     state = {
-        data: [
-            { label: 'Going to learn react', important: true, id: 1 },
-            { label: 'Getting food', important: false, id: 2 },
-            { label: 'Training 18:20', important: false, id: 3 }
-        ]
+        nodes: []
     }
 
-    onDeleteNote = id => {
-        this.setState(({ data }) => {
-            const index = data.findIndex((elem) => elem.id === id);
+    constructor(props) {
+        super(props);
+        axios.get('http://localhost:3001/nodes').then(({ data }) => {
+            this.setState(() => { return { nodes: data } });
+        });
+    }
 
-            const before = data.slice(0, index);
-            const after = data.slice(index + 1);
+    deleteNote = id => {
+        axios.delete(`http://localhost:3001/nodes/${id}`);
+        this.setState(({ nodes }) => {
+            const index = nodes.findIndex((elem) => elem.id === id);
 
-            console.log(before);
-            console.log(after);
+            const before = nodes.slice(0, index);
+            const after = nodes.slice(index + 1);
 
             const newArr = [...before, ...after];
             return {
-                data: newArr
+                nodes: newArr
             }
         });
+    }
+
+    addNode = text => {
+        console.log(text);
     }
 
 
@@ -43,8 +50,8 @@ export default class App extends Component {
                     <SearchPanel />
                     <NoteStatusFilter />
                 </div>
-                <NoteList notes={this.state.data} onDeleteNote={this.onDeleteNote}/>
-                <NoteAddForm />
+                <NoteList notes={this.state.nodes} onDeleteNote={this.deleteNote} />
+                <NoteAddForm onAddItem={this.addNode} />
             </div>
         )
     }

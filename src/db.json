@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "label": "Going to learn react",
+      "important": false,
+      "like": false
+    },
+    {
+      "id": 2,
+      "label": "Getting food",
+      "important": false,
+      "like": false
+    },
+    {
+      "id": 3,
+      "label": "Test 123",
+      "important": false,
+      "like": false
+    }
+  ]
+}

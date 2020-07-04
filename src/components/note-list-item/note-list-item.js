@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import './note-list-item.css';
 
 export default class NoteListItem extends Component {
     state = {
         important: this.props.important ? this.props.important : false,
-        like: false
+        like: this.props.like ? this.props.like : false
     }
 
     onImportant = () => {
         this.setState(({ important }) => {
+            axios.patch('http://localhost:3001/nodes/' + this.props.id, {
+                important: !important
+            }).catch(() => {
+                alert('Error');
+            });
             return { important: !important }
         });
     }
 
     onLike = () => {
         this.setState(({ like }) => {
+            axios.patch('http://localhost:3001/nodes/' + this.props.id, {
+                like: !like
+            }).catch(() => {
+                alert('Error');
+            });
             return { like: !like }
         });
     }
@@ -23,6 +34,8 @@ export default class NoteListItem extends Component {
     render() {
         const { label, onDeleteNote } = this.props,
             { important, like } = this.state;
+
+        console.log(this.props);
 
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {

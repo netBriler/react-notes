@@ -2,7 +2,7 @@ import React from 'react';
 
 import './note-add-form.css'
 
-const NoteAddForm = () => {
+const NoteAddForm = ({onAddItem}) => {
     return (
         <form className="bottom-panel d-flex">
             <input
@@ -12,7 +12,9 @@ const NoteAddForm = () => {
             />
             <button
                 type="submit"
-                className="btn btn-outline-secondary">
+                className="btn btn-outline-secondary"
+                onClick={() => onAddItem('Hello')}
+                >
                 Добавить</button>
         </form>
     )
