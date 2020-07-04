@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import './note-list-item.css';
 
 export default class NoteListItem extends Component {
-    
+
     render() {
         const { text, important, like, onDeleteItem, onToggleImportant, onToggleLiked } = this.props;
 
         let classNames = 'app-list-item d-flex justify-content-between';
+        
         if (important) {
             classNames += ' important';
         }

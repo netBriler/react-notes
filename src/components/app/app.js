@@ -27,19 +27,20 @@ export default class App extends Component {
     deleteNote = id => {
         axios.delete(`http://localhost:3001/notes/${id}`);
         this.setState(({ notes }) => {
-            const index = notes.findIndex((elem) => elem.id === id);
+            const index = notes.findIndex(elem => elem.id === id);
 
             const before = notes.slice(0, index);
             const after = notes.slice(index + 1);
 
             const newArr = [...before, ...after];
+
             return {
                 notes: newArr
             }
         });
     }
 
-    addNode = text => {
+    addNote = text => {
         const newNote = {
             text: text,
             important: false,
@@ -68,6 +69,7 @@ export default class App extends Component {
             }).catch(() => {
                 alert('Error');
             });
+            
             return {
                 notes: newArr
             }
@@ -95,35 +97,43 @@ export default class App extends Component {
         });
     }
 
-    searchPost = (items, term) => {
+    searchNote = (items, term) => {
         if (term.length === 0) {
             return items
         }
 
-        return items.filter((item) => {
-            return item.text.indexOf(term) > -1
-        });
+        return items.filter(item => item.text.indexOf(term) > -1);
     }
 
-    onUpdateSearch = term => this.setState({term})
+    filterNote = (items, filter) => {
+        if (filter === 'like') {
+            return items.filter(item => item.like);
+        } else {
+            return items;
+        }
+    }
+
+    onUpdateSearch = term => this.setState({ term })
+
+    onFilterSelect = filter => this.setState({ filter })
 
     render() {
-        const {notes, term} = this.state;
+        const { notes, term, filter } = this.state;
 
         const liked = notes.filter(item => item.like).length;
         const allNotes = notes.length;
 
-        const visiblePosts = this.searchPost(notes, term);
+        const visiblePosts = this.filterNote(this.searchNote(notes, term), filter);
 
         return (
             <div className='app'>
-                <AppHeader allNotes={allNotes} liked={liked}/>
+                <AppHeader allNotes={allNotes} liked={liked} />
                 <div className="search-panel d-flex">
-                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <NoteStatusFilter />
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+                    <NoteStatusFilter filter={filter} onFilterSelect={this.onFilterSelect} />
                 </div>
                 <NoteList notes={visiblePosts} onDeleteItem={this.deleteNote} onToggleLiked={this.onToggleLiked} onToggleImportant={this.onToggleImportant} />
-                <NoteAddForm onAddItem={this.addNode} />
+                <NoteAddForm onAddItem={this.addNote} />
             </div>
         )
     }

@@ -16,12 +16,12 @@
       "id": 3,
       "text": "Test 123",
       "important": false,
-      "like": true
+      "like": false
     },
     {
       "text": "gg",
       "important": true,
-      "like": true,
+      "like": false,
       "id": 4
     }
   ]
