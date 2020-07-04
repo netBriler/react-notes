@@ -1,22 +1,28 @@
 {
-  "nodes": [
+  "notes": [
     {
       "id": 1,
-      "label": "Going to learn react",
-      "important": false,
+      "text": "Going to learn react",
+      "important": true,
       "like": false
     },
     {
       "id": 2,
-      "label": "Getting food",
+      "text": "Getting food",
       "important": false,
       "like": false
     },
     {
       "id": 3,
-      "label": "Test 123",
+      "text": "Test 123",
       "important": false,
-      "like": false
+      "like": true
+    },
+    {
+      "text": "gg",
+      "important": true,
+      "like": true,
+      "id": 4
     }
   ]
 }

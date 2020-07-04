@@ -3,13 +3,13 @@ import React from 'react';
 import NoteListItem from '../note-list-item';
 import './note-list.css';
 
-const NoteList = ({ notes, onDeleteNote }) => {
+const NoteList = ({ notes, onDeleteItem, onToggleLiked, onToggleImportant }) => {
 
     const elements = notes.map((item) => {
         const { id, ...itemProps } = item;
         return (
             <li key={id} className='list-group-item'>
-                <NoteListItem id={id} {...itemProps} onDeleteNote={() => onDeleteNote(id)} />
+                <NoteListItem id={id} {...itemProps} onDeleteItem={() => onDeleteItem(id)} onToggleLiked={() => onToggleLiked(id)} onToggleImportant={() => onToggleImportant(id)} />
             </li>
         )
     });
