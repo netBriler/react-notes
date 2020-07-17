@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import './app.css';
 
+import dafaultNotes from './default-data.js';
+
 export default class App extends Component {
 
     state = {
@@ -17,10 +19,11 @@ export default class App extends Component {
         filter: 'all'
     }
 
-    constructor(props) {
-        super(props);
+    componentDidMount(){
         axios.get('http://localhost:3001/notes').then(({ data }) => {
             this.setState(() => { return { notes: data } });
+        }).catch(() => {
+            this.setState(() => { return { notes: dafaultNotes } });
         });
     }
 
@@ -67,7 +70,7 @@ export default class App extends Component {
             axios.patch('http://localhost:3001/notes/' + id, {
                 important: !old.important
             }).catch(() => {
-                alert('Error');
+                console.log('Server error');
             });
             
             return {

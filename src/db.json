@@ -13,16 +13,10 @@
       "like": false
     },
     {
-      "id": 3,
-      "text": "Test 123",
+      "text": "Test note",
       "important": false,
-      "like": false
-    },
-    {
-      "text": "gg",
-      "important": true,
       "like": false,
-      "id": 4
+      "id": 3
     }
   ]
 }

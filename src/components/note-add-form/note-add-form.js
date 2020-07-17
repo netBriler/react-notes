@@ -16,7 +16,7 @@ export default class NoteAddForm extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        
+
         this.props.onAddItem(this.state.text);
         this.setState({
             text: ''
